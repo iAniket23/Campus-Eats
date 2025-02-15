@@ -276,3 +276,42 @@ body {
   color: #555;
   margin-left: 10px;
 }
+.weekday-schedule {
+  padding: 2rem;
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  text-align: center;
+  color: var(--text-dark);
+}
+
+.schedule-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.schedule-day {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  width: 300px;
+  text-align: left;
+}
+
+.schedule-day h2 {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+
+.schedule-day ul {
+  list-style: none;
+  padding: 0;
+}
+
+.schedule-day li {
+  margin-bottom: 0.5rem;
+}

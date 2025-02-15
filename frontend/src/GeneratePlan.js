@@ -1,31 +1,31 @@
 import React, { useState } from "react";
-// We removed react-icons usage, so no icon imports
+import { useNavigate } from "react-router-dom";
 
 function GeneratePlan() {
-  // Example data structure: 7 days, each day has an array of meals
+  // Only Monday–Friday now
   const initialPlan = [
     { day: "Monday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
     { day: "Tuesday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
     { day: "Wednesday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
     { day: "Thursday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
     { day: "Friday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
-
   ];
 
   const [mealPlan, setMealPlan] = useState(initialPlan);
+  const navigate = useNavigate();
 
-  // Instead of toggling, we simply lock the meal
+  // Lock a meal permanently
   const lockMeal = (dayIndex, mealIndex) => {
-    setMealPlan((prevPlan) => {
+    setMealPlan(prevPlan => {
       const newPlan = [...prevPlan];
       newPlan[dayIndex].meals[mealIndex].locked = true;
       return newPlan;
     });
   };
 
-  // Randomize a single meal if it's not locked
+  // Randomize a meal if not locked
   const randomizeMeal = (dayIndex, mealIndex) => {
-    setMealPlan((prevPlan) => {
+    setMealPlan(prevPlan => {
       const newPlan = [...prevPlan];
       if (!newPlan[dayIndex].meals[mealIndex].locked) {
         newPlan[dayIndex].meals[mealIndex].name =
@@ -35,11 +35,19 @@ function GeneratePlan() {
     });
   };
 
+  // Check if every meal on every day is locked
+  const allLocked = mealPlan.every(day => day.meals.every(meal => meal.locked));
+
+  // When the new button is clicked, navigate to the WeekdaySchedule page
+  const goToSchedule = () => {
+    navigate("/schedule");
+  };
+
   return (
     <div className="generate-page">
       <h1 className="generate-title">Customize Your Weekly Meal Plan</h1>
       <p className="generate-subtitle">
-        Lock in meals you like, randomize the ones you don’t until you’re happy!
+        Lock in meals you like and randomize the ones you don’t until you're happy!
       </p>
 
       <div className="days-container">
@@ -50,7 +58,6 @@ function GeneratePlan() {
               <div className="meal-slot" key={mealIndex}>
                 <div className="meal-info">
                   <span>{meal.name}</span>
-                  {/* If meal is not locked, show Lock & Randomize buttons */}
                   {!meal.locked ? (
                     <div className="meal-buttons">
                       <button
@@ -67,7 +74,6 @@ function GeneratePlan() {
                       </button>
                     </div>
                   ) : (
-                    // When locked, display a "Locked" label
                     <span className="locked-label">Locked</span>
                   )}
                 </div>
@@ -76,6 +82,13 @@ function GeneratePlan() {
           </div>
         ))}
       </div>
+
+      {/* If every meal is locked, show the new button */}
+      {allLocked && (
+        <button className="btn schedule-btn" onClick={goToSchedule}>
+          Generate My Weekday Schedule
+        </button>
+      )}
     </div>
   );
 }

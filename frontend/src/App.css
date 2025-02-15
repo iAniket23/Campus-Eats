@@ -1,92 +1,278 @@
-.App {
-  text-align: center;
-  font-family: Arial, sans-serif;
+/* Root color variables (based on your attached palette) */
+:root {
+  --dark-green: #181f1c;
+  --deep-green: #274029;
+  --hunter-green: #315c2b;
+  --fern-green: #60712f;
+  --apple-green: #9ea93f;
+
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --bg-light: #f4f4f4;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Global resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+}
+
+/* Landing Page (Hero Section) */
+.landing-page {
+  background-color: var(--bg-light);
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+.hero-section {
+  background: var(--deep-green);
+  flex: 1;
+  display: flex;
   align-items: center;
-  color: white;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
 }
 
-.logo {
-  margin-bottom: 20px;
+.hero-content {
+  color: var(--text-light);
+  max-width: 600px;
 }
 
-.logo-img {
-  width: 100px;
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
-button {
-  background-color: #61dafb;
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Shared Button Styles */
+.btn {
+  background-color: var(--apple-green);
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  cursor: pointer;
+  padding: 12px 24px;
   font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #4fa3d1;
+.btn:hover {
+  background-color: var(--fern-green);
+  color: var(--text-light);
 }
 
-.modal {
+.ai-btn {
+  background-color: var(--hunter-green);
+  color: var(--text-light);
+}
+
+.ai-btn:hover {
+  background-color: var(--dark-green);
+}
+
+/* Modals */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+.modal-container {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 30px 20px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-out;
   text-align: center;
 }
 
-.close {
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 24px;
   position: absolute;
   top: 10px;
-  right: 10px;
-  font-size: 20px;
+  right: 15px;
   cursor: pointer;
 }
 
-.upload-section {
-  text-align: center;
+/* Upload Modal Specific */
+.upload-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.upload-section img {
+.alien-img {
   width: 100px;
   margin-bottom: 15px;
 }
 
-.upload-section p {
+.accepted-formats {
   font-size: 14px;
-  margin-bottom: 10px;
-}
-
-input[type="file"] {
-  padding: 5px;
+  color: #666;
   margin-bottom: 15px;
 }
 
-input[type="file"]:focus {
-  outline: none;
-  border-color: #61dafb;
+.upload-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
 }
 
-button:hover {
-  background-color: #4fa3d1;
+/* Form Modal Specific */
+.preferences-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--apple-green);
+}
+
+.form-submitted {
+  text-align: center;
+}
+
+/* GeneratePlan Page */
+.generate-page {
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-dark);
+}
+
+.generate-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.generate-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Day Columns (Coolors-style) */
+.days-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.day-column {
+  background-color: var(--apple-green);
+  color: var(--text-dark);
+  min-width: 150px;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.day-column h2 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.meal-slot {
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.meal-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+/* Lock/Unlock Icon Button */
+.icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Randomize Button */
+.randomize-btn {
+  background-color: var(--hunter-green);
+  color: var(--text-light);
+  border-radius: 4px;
+}
+
+.randomize-btn:hover {
+  background-color: var(--dark-green);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.locked-label {
+  font-weight: bold;
+  color: #555;
+  margin-left: 10px;
 }

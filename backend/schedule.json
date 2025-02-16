@@ -1,0 +1,258 @@
+{
+    "Monday": {
+        "8:00 AM": "empty",
+        "8:30 AM": "empty",
+        "9:00 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "9:30 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "10:00 AM": "empty",
+        "10:30 AM": "empty",
+        "11:00 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "11:30 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "12:00 PM": "empty",
+        "12:30 PM": "empty",
+        "1:00 PM": "empty",
+        "1:30 PM": "empty",
+        "2:00 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "2:30 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "3:00 PM": "empty",
+        "3:30 PM": "empty",
+        "4:00 PM": "empty",
+        "4:30 PM": "empty",
+        "5:00 PM": "empty",
+        "5:30 PM": "empty",
+        "6:00 PM": "empty",
+        "6:30 PM": "empty",
+        "7:00 PM": "empty",
+        "7:30 PM": "empty"
+    },
+    "Tuesday": {
+        "8:00 AM": "empty",
+        "8:30 AM": "empty",
+        "9:00 AM": "empty",
+        "9:30 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "10:00 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "10:30 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "11:00 AM": "empty",
+        "11:30 AM": "empty",
+        "12:00 PM": "empty",
+        "12:30 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "1:00 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "1:30 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "2:00 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "2:30 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "3:00 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "3:30 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "4:00 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "4:30 PM": {
+            "class": "CMPUT 272 SEM J1",
+            "location": "CCIS L1-160"
+        },
+        "5:00 PM": "empty",
+        "5:30 PM": "empty",
+        "6:00 PM": "empty",
+        "6:30 PM": "empty",
+        "7:00 PM": "empty",
+        "7:30 PM": "empty"
+    },
+    "Wednesday": {
+        "8:00 AM": "empty",
+        "8:30 AM": "empty",
+        "9:00 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "9:30 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "10:00 AM": "empty",
+        "10:30 AM": "empty",
+        "11:00 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "11:30 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "12:00 PM": "empty",
+        "12:30 PM": "empty",
+        "1:00 PM": "empty",
+        "1:30 PM": "empty",
+        "2:00 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "2:30 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "3:00 PM": "empty",
+        "3:30 PM": "empty",
+        "4:00 PM": "empty",
+        "4:30 PM": "empty",
+        "5:00 PM": "empty",
+        "5:30 PM": "empty",
+        "6:00 PM": "empty",
+        "6:30 PM": "empty",
+        "7:00 PM": "empty",
+        "7:30 PM": "empty"
+    },
+    "Thursday": {
+        "8:00 AM": "empty",
+        "8:30 AM": "empty",
+        "9:00 AM": "empty",
+        "9:30 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "10:00 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "10:30 AM": {
+            "class": "MATH 156 LEC R1",
+            "location": "CCIS L2-200"
+        },
+        "11:00 AM": "empty",
+        "11:30 AM": "empty",
+        "12:00 PM": "empty",
+        "12:30 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "1:00 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "1:30 PM": {
+            "class": "CMPUT 272 LEC B1",
+            "location": "T LB-001"
+        },
+        "2:00 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "2:30 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "3:00 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "3:30 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "4:00 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "4:30 PM": {
+            "class": "CMPUT 175 LAB H20",
+            "location": "CSC 1-53"
+        },
+        "5:00 PM": "empty",
+        "5:30 PM": "empty",
+        "6:00 PM": "empty",
+        "6:30 PM": "empty",
+        "7:00 PM": "empty",
+        "7:30 PM": "empty"
+    },
+    "Friday": {
+        "8:00 AM": "empty",
+        "8:30 AM": "empty",
+        "9:00 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "9:30 AM": {
+            "class": "CMPUT 175 LEC B1",
+            "location": "ETLC E1-013"
+        },
+        "10:00 AM": "empty",
+        "10:30 AM": "empty",
+        "11:00 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "11:30 AM": {
+            "class": "MATH 125 LEC R1",
+            "location": "VVC 2-215"
+        },
+        "12:00 PM": "empty",
+        "12:30 PM": "empty",
+        "1:00 PM": "empty",
+        "1:30 PM": "empty",
+        "2:00 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "2:30 PM": {
+            "class": "ENGL 103 LEC B13",
+            "location": "T B-81"
+        },
+        "3:00 PM": "empty",
+        "3:30 PM": "empty",
+        "4:00 PM": "empty",
+        "4:30 PM": "empty",
+        "5:00 PM": "empty",
+        "5:30 PM": "empty",
+        "6:00 PM": "empty",
+        "6:30 PM": "empty",
+        "7:00 PM": "empty",
+        "7:30 PM": "empty"
+    }
+}

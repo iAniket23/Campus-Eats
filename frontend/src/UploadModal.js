@@ -13,7 +13,7 @@ function UploadModal({ closeModal }) {
       formData.append("file", file);
 
       try {
-        const response = await fetch("http://127.0.0.1:5000/upload", {
+        const response = await fetch("http://127.0.0.1:5001/upload", {
           method: "POST",
           body: formData,
         });
@@ -40,11 +40,7 @@ function UploadModal({ closeModal }) {
         </button>
         <h2>Upload Your Schedule</h2>
         <div className="upload-content">
-          <img
-            src="/alien.png" 
-            alt="Alien"
-            className="alien-img"
-          />
+          <img src="/alien.png" alt="Alien" className="alien-img" />
           <p className="accepted-formats">
             Accepted formats: PDF, JPEG, PNG, ICS
           </p>

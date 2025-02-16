@@ -81,6 +81,16 @@ def upload_file():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/schedule', methods=['GET'])
+def get_schedule():
+    try:
+        with open("schedule.json") as f:
+            schedule = json.load(f)
+        return jsonify(schedule)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

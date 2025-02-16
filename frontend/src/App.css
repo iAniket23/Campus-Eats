@@ -1,4 +1,9 @@
 /* Root color variables (based on your attached palette) */
+
+body {
+  font-family: 'Reenie Beanie', cursive;
+}
+
 :root {
   --dark-green: #181f1c;
   --deep-green: #274029;
@@ -184,15 +189,6 @@ body {
   text-align: center;
 }
 
-/* GeneratePlan Page */
-.generate-page {
-  background-color: var(--bg-light);
-  min-height: 100vh;
-  padding: 2rem;
-  text-align: center;
-  color: var(--text-dark);
-}
-
 .generate-title {
   font-size: 2rem;
   margin-bottom: 0.5rem;
@@ -204,14 +200,6 @@ body {
   color: #555;
 }
 
-/* Day Columns (Coolors-style) */
-.days-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 1rem 0;
-}
 
 .day-column {
   background-color: var(--apple-green);
@@ -314,4 +302,240 @@ body {
 
 .schedule-day li {
   margin-bottom: 0.5rem;
+}
+/* Container for the entire page */
+.generate-page {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  /* padding: 2rem; */
+  text-align: center;
+}
+
+.generate-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.generate-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+
+
+/* Each day's column */
+.day-column {
+  width: 350px;              /* Adjust width as needed */
+  min-height: 300px;         /* Make them tall columns */
+  background-color: #dfe5cc; /* Light color for the column background */
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height:500px;
+}
+
+/* Day title at the top */
+.day-title {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: 'Reenie Beanie', cursive;
+}
+
+/* Optional magnifying glass icon near the top */
+.magnify-icon {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+/* Lock icon in the middle */
+.lock-icon {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+/* Meal info below the lock icon */
+.meal-text {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+/* Buttons for randomize and lock */
+.meal-actions {
+  margin-top: auto; /* push them to the bottom if you want */
+}
+
+/* General button styling */
+.btn {
+  background-color: #8fb170; /* a medium green */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  background-color: #76965b; /* darker green on hover */
+}
+
+/* Different color for randomize vs lock if you like */
+.randomize-btn {
+  background-color: #c4d4a0;
+  color: #333;
+}
+
+.randomize-btn:hover {
+  background-color: #b3c38f;
+}
+
+/* Button that appears when everything is locked */
+.schedule-btn {
+  margin-top: 2rem;
+  background-color: #4fa3d1;
+}
+
+.schedule-btn:hover {
+  background-color: #367da3;
+}
+
+/* Root color variables (if you still want to keep a palette) */
+:root {
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --bg-light: #f4f4f4;
+}
+
+/* Main page container */
+.generate-page {
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  /* padding: 2rem; */
+  text-align: center;
+}
+
+.generate-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.generate-subtitle {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Layout for the day columns */
+.days-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0px;
+  /* margin-top: 20px; */
+}
+
+/* Each day's column */
+.day-column {
+  width: 400px;
+  min-height: 400px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* padding: 10px; */
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.day-column:hover {
+  transform: scale(1.03);
+}
+
+/* Day title (custom font if needed) */
+.day-title {
+  margin-top: 10px;
+  font-size: 50px;
+  font-weight: bold;
+  font-family: "Comic Sans MS", cursive, sans-serif; /* Adjust as needed */
+  font-family: 'Reenie Beanie', cursive;
+}
+
+/* Magnifying glass icon */
+.magnify-icon {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+/* Lock icon */
+.lock-icon {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+/* Meal text below lock icon */
+.meal-text {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Button actions */
+.meal-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+/* General button styling */
+.btn {
+  background-color: #8fb170; /* A medium green */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #76965b;
+}
+
+/* Different button styles */
+.randomize-btn {
+  background-color: #c4d4a0;
+  color: #333;
+}
+
+.randomize-btn:hover {
+  background-color: #b3c38f;
+}
+
+.lock-btn {
+  background-color: #4fa3d1;
+}
+
+.lock-btn:hover {
+  background-color: #367da3;
+}
+
+/* Schedule button */
+.schedule-btn {
+  margin-top: 2rem;
+  background-color: #1F3434;
+}
+
+.schedule-btn:hover {
+  background-color: #345B5E;
 }

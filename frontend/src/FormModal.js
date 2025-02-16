@@ -17,10 +17,27 @@ function FormModal({ closeModal }) {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Send formData to backend or handle as needed
-    setFormSubmitted(true);
+    
+    try {
+      const response = await fetch("http://localhost:5001/submit-Form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        console.error("Error submitting form:", errorData);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
 
   return (

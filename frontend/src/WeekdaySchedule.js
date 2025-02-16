@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 function WeekdaySchedule() {
   const [schedule, setSchedule] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5001/schedule")
-      .then((response) => response.json())
-      .then((data) => {
+    fetch('http://127.0.0.1:5001/schedule')
+      .then(response => response.json())
+      .then(data => {
         setSchedule(data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching schedule:", error);
+      .catch(error => {
+        console.error('Error fetching schedule:', error);
         setLoading(false);
       });
   }, []);

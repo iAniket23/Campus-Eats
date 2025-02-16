@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 function GeneratePlan() {
   // Define colors for each weekday
@@ -49,6 +50,17 @@ function GeneratePlan() {
   // Navigate to schedule page once everything is locked
   const goToSchedule = () => {
     navigate("/schedule");
+  };
+
+  // Map configuration
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
+  };
+
+  const center = {
+    lat: 37.7749, 
+    lng: -122.4194, 
   };
 
   return (
@@ -107,6 +119,17 @@ function GeneratePlan() {
           Generate My Weekday Schedule
         </button>
       )}
+
+      {/* Google Map Section */}
+      <div className="map-section">
+        <h2>Find Meals on the Map</h2>
+        <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
+          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
+            {/* Example Marker */}
+            <Marker position={center} />
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 }

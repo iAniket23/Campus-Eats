@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 function GeneratePlan() {
-  // Only Monday–Friday now
   const initialPlan = [
     { day: "Monday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
     { day: "Tuesday", meals: [{ name: "Meal 1 (Placeholder)", locked: false }, { name: "Meal 2 (Placeholder)", locked: false }] },
@@ -14,18 +14,16 @@ function GeneratePlan() {
   const [mealPlan, setMealPlan] = useState(initialPlan);
   const navigate = useNavigate();
 
-  // Lock a meal permanently
   const lockMeal = (dayIndex, mealIndex) => {
-    setMealPlan(prevPlan => {
+    setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       newPlan[dayIndex].meals[mealIndex].locked = true;
       return newPlan;
     });
   };
 
-  // Randomize a meal if not locked
   const randomizeMeal = (dayIndex, mealIndex) => {
-    setMealPlan(prevPlan => {
+    setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       if (!newPlan[dayIndex].meals[mealIndex].locked) {
         newPlan[dayIndex].meals[mealIndex].name =
@@ -35,12 +33,21 @@ function GeneratePlan() {
     });
   };
 
-  // Check if every meal on every day is locked
-  const allLocked = mealPlan.every(day => day.meals.every(meal => meal.locked));
+  const allLocked = mealPlan.every((day) => day.meals.every((meal) => meal.locked));
 
-  // When the new button is clicked, navigate to the WeekdaySchedule page
   const goToSchedule = () => {
     navigate("/schedule");
+  };
+
+  // Map configuration
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
+  };
+
+  const center = {
+    lat: 37.7749, 
+    lng: -122.4194, 
   };
 
   return (
@@ -83,12 +90,22 @@ function GeneratePlan() {
         ))}
       </div>
 
-      {/* If every meal is locked, show the new button */}
       {allLocked && (
         <button className="btn schedule-btn" onClick={goToSchedule}>
           Generate My Weekday Schedule
         </button>
       )}
+
+      {/* Google Map Section */}
+      <div className="map-section">
+        <h2>Find Meals on the Map</h2>
+        <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
+          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
+            {/* Example Marker */}
+            <Marker position={center} />
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 }

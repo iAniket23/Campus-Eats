@@ -113,6 +113,17 @@ def upload_file():
             return jsonify({"error": "Invalid file format. Please upload an .ics file."}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/schedule', methods=['GET'])
+def get_schedule():
+    """Return the saved schedule.json file as JSON."""
+    try:
+        with open("schedule.json", "r") as f:
+            schedule = json.load(f)
+        return jsonify(schedule)
+    except FileNotFoundError:
+        return jsonify({"error": "Schedule not found"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)

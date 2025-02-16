@@ -1,11 +1,25 @@
 from flask import Flask, request, jsonify
 import icalendar
 import json
+import os
 from datetime import datetime, timedelta
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+
 app = Flask(__name__)
 CORS(app)
+#CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
+BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
+FULL_DATA_PATH = os.path.join(BACKEND_DIR, "form_data.json")
+FILTERED_DATA_PATH = os.path.join(BACKEND_DIR, "filtered_data.json")
+
+@app.before_request
+def before_request():
+    headers = {'Access-Control-Allow-Origin': '*',
+               'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+               'Access-Control-Allow-Headers': 'Content-Type'}
+    if request.method.lower() == 'options':
+        return jsonify(headers), 200
 
 def generate_time_slots(start_hour, end_hour):
     """
@@ -123,10 +137,43 @@ def get_schedule():
         return jsonify(schedule)
     except FileNotFoundError:
         return jsonify({"error": "Schedule not found"}), 404
+    
+
+@app.route("/submit-Form", methods=["OPTIONS", "POST"])
+def submit_form():
+    # Handle the preflight request (OPTIONS)
+    if request.method == "OPTIONS":
+        return jsonify({"message": "Preflight OK"}), 200
+
+    # Handle the actual POST request
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
+        # Save full data
+        with open(FULL_DATA_PATH, "w") as full_file:
+            json.dump(data, full_file, indent=4)
+
+        # Extract only Calories, Protein, and Carbohydrates
+        filtered_data = {
+            "Calories": data.get("calories", ""),
+            "Protein": data.get("protein", ""),
+            "Carbohydrates": data.get("carbs", "")
+        }
+
+        # Save filtered data
+        with open(FILTERED_DATA_PATH, "w") as filtered_file:
+            json.dump(filtered_data, filtered_file, indent=4)
+
+        return jsonify({"message": "Form data saved successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5001,debug=True)
 
 
 

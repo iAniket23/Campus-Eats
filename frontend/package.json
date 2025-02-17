@@ -21,7 +21,11 @@
   },
   "engines": {
   "node": "18"
-},
+},"build": {
+    "env": {
+      "NODE_VERSION": "18"
+    }
+  },
 
   "eslintConfig": {
     "extends": [

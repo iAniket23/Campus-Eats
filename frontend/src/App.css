@@ -439,7 +439,7 @@ body {
 
 .day-column {
   width: 400px;
-  min-height: 600px;
+  min-height: 1100px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -713,6 +713,7 @@ body {
   padding: 1rem 2rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   padding-bottom:200px;
+  margin-left:300px;
 }
 
 
@@ -722,6 +723,7 @@ body {
   font-size:4rem;
   margin-top:2rem;
   margin-bottom: 5rem;
+  margin-left:-250px;
 }
 
 .generate-page {
@@ -1140,7 +1142,7 @@ body {
   justify-content: space-between; /* Push buttons to the bottom */
   align-items: center;
   width: 400px;
-  min-height: 700px;
+  min-height: 800px;
   border-radius: 15px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1382,4 +1384,9 @@ body {
   width: 100%;
   height: auto;
   border-radius: 8px;
+}
+.schedule-btn {
+  margin-top: 2rem;
+  background-color: #4fa3d1;
+  color:white;
 }

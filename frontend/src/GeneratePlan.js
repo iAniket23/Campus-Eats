@@ -119,13 +119,7 @@ function GeneratePlan() {
         meal: { name: formatMealName(selectedMeals[4]?.meal), ...selectedMeals[4], locked: false },
       },
     ];
-    const newMealPlan = [
-      { day: "Mon", meal: { name: formatMealName(selectedMeals[0]?.meal), ...selectedMeals[0], locked: false } },
-      { day: "Tue", meal: { name: formatMealName(selectedMeals[1]?.meal), ...selectedMeals[1], locked: false } },
-      { day: "Wed", meal: { name: formatMealName(selectedMeals[2]?.meal), ...selectedMeals[2], locked: false } },
-      { day: "Thurs", meal: { name: formatMealName(selectedMeals[3]?.meal), ...selectedMeals[3], locked: false } },
-      { day: "Fri", meal: { name: formatMealName(selectedMeals[4]?.meal), ...selectedMeals[4], locked: false } },
-    ];
+
 
     setMealPlan(newMealPlan);
   };
@@ -257,24 +251,6 @@ function GeneratePlan() {
                 "N/A"
               )}
             </p>
-              <p>
-                <strong>Calories:</strong> {dayData.meal.calories || "N/A"}
-              </p>
-              <p>
-                <strong>Carbs:</strong> {dayData.meal.carbohydrates || "N/A"}g
-              </p>
-              <p>
-                <strong>Protein:</strong> {dayData.meal.protein || "N/A"}g
-              </p>
-              <p>
-                <strong>Category:</strong> {dayData.meal.category || "N/A"}
-              </p>
-              <p>
-                <strong>Restaurant:</strong> {dayData.meal.restaurant || "N/A"}
-              </p>
-              <p>
-                <strong>Location:</strong> {dayData.meal.location || "N/A"}
-              </p>
             </div>
 
             {dayData.meal.locked ? (

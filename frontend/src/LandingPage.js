@@ -7,16 +7,6 @@ import FormModal from "./FormModal";
 import icon1 from "./icon1.gif";
 
 
-// // Import local images
-// import opa from "./opa.png";
-// import nyf from "./nyf.png";
-// import bar from "./bar.png";
-// import edo from "./edo.png";
-// import bento from "./bento.png";
-// import remedy from "./remedy.png";
-// import subway from "./subway.png";
-// import savoy from "./savoy.png";
-
 function LandingPage() {
   const navigate = useNavigate();
 
@@ -173,31 +163,31 @@ function LandingPage() {
         <h2>Features</h2>
         <div className="features-container">
           <div className="feature-card">
-            <h3>Real-Time Availability</h3>
+            <h3>Pedway Routing Section</h3>
             <p>
-              Know which dining halls or vending machines have your favorite
-              snacks in stock.
+            Navigate campus using indoor pathways and avoid the harsh weather. Quickly see 
+            which pedway routes connect your classes to nearby dining spots.
             </p>
           </div>
           <div className="feature-card">
-            <h3>AI Meal Planning</h3>
+            <h3>AI Meal Planning Feature</h3>
             <p>
               Get suggestions based on dietary preferences, location, and
               schedule.
             </p>
           </div>
           <div className="feature-card">
-            <h3>Campus-Specific Insights</h3>
+            <h3>Multiple Cuisine Supports</h3>
             <p>
-              Discover indoor routes, see how crowded a place is, and stay warm
-              in winter.
+            Choose up to two cuisines so you aren’t stuck with the same flavors. 
+            We’ll curate meals across campus that match your cravings.
             </p>
           </div>
           <div className="feature-card">
-            <h3>Social & Reviews</h3>
+            <h3>Class Schedule Integration</h3>
             <p>
-              Check what friends recommend, rate your own meals, and find hidden
-              gems.
+            Upload your schedule and let us embed mealtimes into your free slots. 
+            We ensure you don’t miss class—and never go hungry!
             </p>
           </div>
         </div>
@@ -214,17 +204,6 @@ function LandingPage() {
           <br /> HackED © 2025
         </p>
       </footer>
-        {/* <div className="cta-buttons">
-          <button className="btn" onClick={openUploadModal}>
-            Upload Schedule
-          </button>
-          <button className="btn" onClick={openFormModal}>
-            Preferences
-          </button>
-          <button className="btn ai-btn" onClick={goToGeneratePlan}>
-            Generate Plan
-          </button>
-        </div> */}
       
 
       {/* Existing Modals */}

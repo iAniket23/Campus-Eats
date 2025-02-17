@@ -12,7 +12,33 @@ function GeneratePlan() {
     Fri: "#586f6b",
   };
 
-  // Only Monday–Friday, one meal per day
+  // Define buildings and their coordinates
+  const buildingLocations = {
+    CCIS: { lat: 53.5232, lng: -113.5263 },
+    CAB: { lat: 53.5266, lng: -113.5248 },
+    "Cameron Library": { lat: 53.5267, lng: -113.5236 },
+    ETLC: { lat: 53.5232, lng: -113.5263 },
+    ECHA: { lat: 53.5209, lng: -113.5264 },
+    "Lister Centre": { lat: 53.5232, lng: -113.5263 },
+    Tory: { lat: 53.5282, lng: -113.5215 },
+    NREF: { lat: 53.5268, lng: -113.5291 },
+    HUB: { lat: 53.5262, lng: -113.5207 },
+    SUB: { lat: 53.5253, lng: -113.5274 },
+    "Dewey's": { lat: 53.5261, lng: -113.5233 },
+  };
+
+  // Meals and their associated buildings
+  const mealLocations = {
+    "Meal 1 (Placeholder)": "CAB",
+    "Meal 2": "CCIS",
+    "Meal 3": "ETLC",
+    "Meal 4": "Lister Centre",
+    "Meal 5": "Tory",
+    "Meal 6": "SUB",
+    "Meal 7": "ECHA",
+  };
+
+  // Initial meal plan
   const initialPlan = [
     { day: "Mon", meal: { name: "Meal 1 (Placeholder)", locked: false } },
     { day: "Tue", meal: { name: "Meal 1 (Placeholder)", locked: false } },
@@ -22,6 +48,7 @@ function GeneratePlan() {
   ];
 
   const [mealPlan, setMealPlan] = useState(initialPlan);
+  const [markers, setMarkers] = useState([]);
   const navigate = useNavigate();
 
   // Randomize a single meal if it's not locked
@@ -29,22 +56,32 @@ function GeneratePlan() {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       if (!newPlan[dayIndex].meal.locked) {
-        newPlan[dayIndex].meal.name = "Random Meal " + Math.floor(Math.random() * 100);
+        newPlan[dayIndex].meal.name = "Meal " + Math.floor(Math.random() * 7 + 1);
       }
       return newPlan;
     });
   };
 
-  // Lock a meal
+  // Lock a meal and add its marker to the map
   const lockMeal = (dayIndex) => {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       newPlan[dayIndex].meal.locked = true;
+
+      // Get building location for the locked meal
+      const mealName = newPlan[dayIndex].meal.name;
+      const building = mealLocations[mealName];
+      const location = buildingLocations[building];
+
+      if (location) {
+        setMarkers((prevMarkers) => [...prevMarkers, location]);
+      }
+
       return newPlan;
     });
   };
 
-  // Check if every meal is locked
+  // Check if all meals are locked
   const allLocked = mealPlan.every((dayData) => dayData.meal.locked);
 
   // Navigate to schedule page once everything is locked
@@ -59,49 +96,33 @@ function GeneratePlan() {
   };
 
   const center = {
-    lat: 37.7749, 
-    lng: -122.4194, 
+    lat: 53.5266, // Default center (CAB)
+    lng: -113.5248,
   };
 
   return (
-
-    
     <div className="generate-page">
-      {/* <h1 className="generate-title">Customize Your Weekly Meal Plan</h1>
-      <p className="generate-subtitle">
-        Lock in meals you like and randomize the ones you don’t until you’re happy!
-      </p> */}
-
       <div className="days-container">
         {mealPlan.map((dayData, dayIndex) => (
           <div
             className="day-column"
             key={dayData.day}
-            style={{ backgroundColor: dayColors[dayData.day] }} // Apply unique color per day
+            style={{ backgroundColor: dayColors[dayData.day] }}
           >
-            {/* Day name at the top */}
             <div className="day-title">{dayData.day}</div>
-            
-            {/* Optional magnifying glass icon */}
             <div className="magnify-icon">🔍</div>
 
-            {/* Lock / Unlock display */}
             {dayData.meal.locked ? (
               <div className="lock-icon">🔒</div>
             ) : (
               <div className="lock-icon">🔓</div>
             )}
 
-            {/* Meal info below the lock icon */}
             <div className="meal-text">{dayData.meal.name}</div>
 
-            {/* Buttons only show if meal not locked */}
             {!dayData.meal.locked && (
               <div className="meal-actions">
-                <button
-                  className="btn randomize-btn"
-                  onClick={() => randomizeMeal(dayIndex)}
-                >
+                <button className="btn randomize-btn" onClick={() => randomizeMeal(dayIndex)}>
                   Randomize
                 </button>
                 <button className="btn lock-btn" onClick={() => lockMeal(dayIndex)}>
@@ -113,20 +134,19 @@ function GeneratePlan() {
         ))}
       </div>
 
-      {/* If all meals are locked, show a button to generate weekday schedule */}
       {allLocked && (
         <button className="btn schedule-btn" onClick={goToSchedule}>
           Generate My Weekday Schedule
         </button>
       )}
 
-      {/* Google Map Section */}
       <div className="map-section">
         <h2>Find Meals on the Map</h2>
         <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
-          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
-            {/* Example Marker */}
-            <Marker position={center} />
+          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={15}>
+            {markers.map((marker, index) => (
+              <Marker key={index} position={marker} />
+            ))}
           </GoogleMap>
         </LoadScript>
       </div>

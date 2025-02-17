@@ -40,6 +40,47 @@ function FormModal({ closeModal }) {
     }
   };
 
+  const handleMealFetch = async () => {
+    try {
+        const response = await fetch(
+            "https://us-central1-studied-anchor-451016-e0.cloudfunctions.net/cluster",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    calories: formData.calories, 
+                    protein: formData.protein,
+                    carbohydrates: formData.carbs,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            console.error("Error fetching meal data:", response.statusText);
+            return [];
+        }
+
+        const result = await response.json(); // Convert response to JSON
+        console.log("Meal Recommendations:", result);
+
+        return result.meals || []; // Make sure it returns an array
+    } catch (error) {
+        console.error("Network error:", error);
+        return [];
+    }
+};
+
+const fetchMeal = async () => {
+  const mealData = await handleMealFetch();
+  if (mealData.length > 0) {
+      console.log("Storing meals in localStorage:", mealData);
+      localStorage.setItem("mealOptions", JSON.stringify(mealData));
+  }
+};
+
+
   return (
     <div className="modal-overlay">
       <div className="modal-container">
@@ -106,7 +147,11 @@ function FormModal({ closeModal }) {
               />
             </div>
 
-            <button type="submit" className="btn submit-btn">
+            <button
+              type="submit"
+              className="btn submit-btn"
+              onClick={fetchMeal}
+            >
               Submit Preferences
             </button>
           </form>

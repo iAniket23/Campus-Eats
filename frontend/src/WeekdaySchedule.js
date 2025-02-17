@@ -43,24 +43,24 @@ function WeekdaySchedule() {
       });
   }, []);
 
+  
+
   /**
    * Insert locked meals into the first available timeslot
    * among idealMealTimes for each day.
    */
   function addMealsToSchedule(originalSchedule, locked) {
-    
     const newSchedule = JSON.parse(JSON.stringify(originalSchedule));
-
+  
     for (let shortDay in locked) {
       const mealName = locked[shortDay].name;
       const fullDay = dayMap[shortDay];
-
+  
       if (newSchedule[fullDay]) {
-        
         for (let time of idealMealTimes) {
           if (newSchedule[fullDay][time] === "empty") {
             newSchedule[fullDay][time] = {
-              class: mealName,
+              class: mealName,  // API meal name here
               location: "Meal Time",
             };
             break;
@@ -70,6 +70,7 @@ function WeekdaySchedule() {
     }
     return newSchedule;
   }
+  
 
  
   function parseTimeToMinutes(timeStr) {

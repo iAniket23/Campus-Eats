@@ -1,219 +1,236 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import UploadModal from "./UploadModal";
-import FormModal from "./FormModal";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
-// Import local images
-import opa from "./opa.png";
-import nyf from "./nyf.png";
-import bar from "./bar.png";
-import edo from "./edo.png";
-import bento from "./bento.png";
-import remedy from "./remedy.png";
-import subway from "./subway.png";
-import savoy from "./savoy.png";
+function GeneratePlan() {
+  const dayColors = {
+    Mon: "#ddd5d0",
+    Tue: "#cfc0bd",
+    Wed: "#b8b8aa",
+    Thurs: "#7f9183",
+    Fri: "#586f6b",
+  };
 
-function LandingPage() {
+  const [allMeals, setAllMeals] = useState([]); // Stores full meal list
+  const [mealPlan, setMealPlan] = useState([]);
   const navigate = useNavigate();
 
-  // Existing modals
-  const [isUploadOpen, setUploadOpen] = useState(false);
-  const [isFormOpen, setFormOpen] = useState(false);
-
-  const openUploadModal = () => setUploadOpen(true);
-  const closeUploadModal = () => setUploadOpen(false);
-
-  const openFormModal = () => setFormOpen(true);
-  const closeFormModal = () => setFormOpen(false);
-
-  const goToGeneratePlan = () => {
-    navigate("/generate");
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
   };
 
-  const handleSurpriseMe = () => {
-    alert("Surprise Me feature coming soon!");
+  const center = {
+    lat: 37.7749,
+    lng: -122.4194,
   };
+
+  // Fetch meals from API
+  const fetchMealsFromAPI = async () => {
+    try {
+      const response = await fetch(
+        "https://us-central1-studied-anchor-451016-e0.cloudfunctions.net/cluster",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            calories: 500,
+            protein: 30,
+            carbohydrates: 40,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      console.log("API Response:", result);
+
+      if (result.meals) {
+        setAllMeals(result.meals);
+      }
+    } catch (error) {
+      console.error("Error fetching meals:", error);
+    }
+  };
+
+  // Function to select 5 random meals
+  const selectRandomMeals = () => {
+    if (allMeals.length < 5) return;
+
+    const shuffledMeals = [...allMeals].sort(() => 0.5 - Math.random());
+    const selectedMeals = shuffledMeals.slice(0, 5);
+
+    const newMealPlan = [
+      { day: "Mon", meal: selectedMeals[0] || {} },
+      { day: "Tue", meal: selectedMeals[1] || {} },
+      { day: "Wed", meal: selectedMeals[2] || {} },
+      { day: "Thurs", meal: selectedMeals[3] || {} },
+      { day: "Fri", meal: selectedMeals[4] || {} },
+    ];
+
+    setMealPlan(newMealPlan);
+  };
+
+  // Fetch meals on first render
+  useEffect(() => {
+    fetchMealsFromAPI();
+  }, []);
+
+  // Automatically assign meals when API fetches data
+  useEffect(() => {
+    if (allMeals.length > 0) {
+      selectRandomMeals();
+    }
+  }, [allMeals]);
+
+  // Fetch a new meal for a specific day
+  const randomizeMeal = async (dayIndex) => {
+    if (allMeals.length === 0) return;
+
+    const randomMeal = allMeals[Math.floor(Math.random() * allMeals.length)];
+
+    setMealPlan((prevPlan) => {
+      const newPlan = [...prevPlan];
+      if (!newPlan[dayIndex].meal.locked) {
+        newPlan[dayIndex].meal = randomMeal;
+      }
+      return newPlan;
+    });
+  };
+
+  // Randomize all unlocked meals using spacebar
+  const randomizeAllUnlocked = () => {
+    if (allMeals.length === 0) return;
+
+    setMealPlan((prevPlan) => {
+      return prevPlan.map((dayData) => {
+        if (!dayData.meal.locked) {
+          const randomMeal =
+            allMeals[Math.floor(Math.random() * allMeals.length)];
+          return { ...dayData, meal: randomMeal };
+        }
+        return dayData;
+      });
+    });
+  };
+
+  // Lock a meal
+  const lockMeal = (dayIndex) => {
+    setMealPlan((prevPlan) => {
+      const newPlan = [...prevPlan];
+      newPlan[dayIndex].meal.locked = true;
+      return newPlan;
+    });
+  };
+
+  // Check if all meals are locked
+  const allLocked = mealPlan.every((dayData) => dayData.meal.locked);
+
+  // Save locked meals and navigate to schedule
+  const goToSchedule = () => {
+    const lockedMeals = {};
+    mealPlan.forEach((dayData) => {
+      if (dayData.meal.locked) {
+        lockedMeals[dayData.day] = { name: dayData.meal.meal };
+      }
+    });
+    localStorage.setItem("lockedMeals", JSON.stringify(lockedMeals));
+    navigate("/schedule");
+  };
+
+  // Listen for spacebar event
+  useEffect(() => {
+    function handleSpace(e) {
+      if (e.code === "Space") {
+        e.preventDefault();
+        randomizeAllUnlocked();
+      }
+    }
+    window.addEventListener("keydown", handleSpace);
+    return () => {
+      window.removeEventListener("keydown", handleSpace);
+    };
+  }, [allMeals]);
 
   return (
-    <div className="landing-page">
-      {/* NAVIGATION */}
-      <nav className="nav-bar">
-        <div className="nav-logo">Campus Eats</div>
-        <ul className="nav-links">
-          <li>
-            <a href="#steps">How It Works</a>
-          </li>
-          <li>
-            <a href="#features">Features</a>
-          </li>
-          <li>
-            <a href="#cta">Get Started</a>
-          </li>
-        </ul>
-      </nav>
+    <div className="generate-page">
+      <div className="days-container">
+        {mealPlan.map((dayData, dayIndex) => (
+          <div
+            className="day-column"
+            key={dayData.day}
+            style={{ backgroundColor: dayColors[dayData.day] }}
+          >
+            <div className="day-title">{dayData.day}</div>
 
-      {/* HERO SECTION with Scrolling Images */}
-      <header className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">Campus Eats</h1>
-          <p className="hero-subtitle">
-            The ultimate platform for campus dining—no more guesswork, just
-            great meals!
-          </p>
-          <div className="hero-buttons">
-            <button className="btn surprise-btn" onClick={handleSurpriseMe}>
-              Surprise Me!
-            </button>
-            <button className="btn ai-btn" onClick={goToGeneratePlan}>
-              Generate Meal Plan
-            </button>
-          </div>
-        </div>
-        <div className="hero-scroller">
-          <div className="image-track">
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-            <img src={opa} alt="Meal 1" />
-            <img src={nyf} alt="Meal 2" />
-            <img src={bar} alt="Meal 3" />
-            <img src={edo} alt="Meal 4" />
-            <img src={bento} alt="Meal 5" />
-            <img src={remedy} alt="Meal 6" />
-            <img src={subway} alt="Meal 7" />
-            <img src={savoy} alt="Meal 8" />
-          </div>
-        </div>
-      </header>
+            {/* Meal Name */}
+            <div className="meal-text">
+              <strong>{dayData.meal.meal || "Unknown Meal"}</strong>
+            </div>
 
-      {/* STEPS SECTION */}
-      <section className="steps-section" id="steps">
-        <h2>How It Works</h2>
-        <div className="steps-container">
-          <div className="step-card">
-            <div className="step-number">1</div>
-            <h3>Upload Schedule</h3>
-            <p>Upload your class schedule or link your calendar.</p>
-            <button className="btn" onClick={openUploadModal}>
-              Upload
-            </button>
-          </div>
-          <div className="step-card">
-            <div className="step-number">2</div>
-            <h3>Set Preferences</h3>
-            <p>Input dietary needs and meal goals.</p>
-            <button className="btn" onClick={openFormModal}>
-              Preferences
-            </button>
-          </div>
-          <div className="step-card">
-            <div className="step-number">3</div>
-            <h3>Generate Meal Plan</h3>
-            <p>
-              Our AI tailors your meals to your location, schedule, and
-              nutrition goals!
-            </p>
-            <button className="btn ai-btn" onClick={goToGeneratePlan}>
-              Generate Plan
-            </button>
-          </div>
-        </div>
-      </section>
+            {/* Meal Info (Formatted Better) */}
+            <div className="meal-info">
+              <p>
+                <span>🍽️ Category:</span> {dayData.meal.category || "N/A"}
+              </p>
+              <p>
+                <span>🔥 Calories:</span> {dayData.meal.calories || "N/A"}
+              </p>
+              <p>
+                <span>💪 Protein:</span> {dayData.meal.protein || "N/A"}g
+              </p>
+              <p>
+                <span>🍞 Carbs:</span> {dayData.meal.carbohydrates || "N/A"}g
+              </p>
+              <p>
+                <span>🏠 Restaurant:</span> {dayData.meal.restaurant || "N/A"}
+              </p>
+              <p>
+                <span>📍 Location:</span> {dayData.meal.location || "N/A"}
+              </p>
+            </div>
 
-      {/* FEATURES SECTION */}
-      <section className="features-section" id="features">
-        <h2>Features</h2>
-        <div className="features-container">
-          <div className="feature-card">
-            <h3>Real-Time Availability</h3>
-            <p>
-              Know which dining halls or vending machines have your favorite
-              snacks in stock.
-            </p>
+            {dayData.meal.locked ? (
+              <div className="meal-actions locked-label">🔒 Locked</div>
+            ) : (
+              <div className="meal-actions">
+                <button
+                  className="btn randomize-btn"
+                  onClick={() => randomizeMeal(dayIndex)}
+                >
+                  🔄 Randomize
+                </button>
+                <button
+                  className="btn lock-btn"
+                  onClick={() => lockMeal(dayIndex)}
+                >
+                  🔒 Lock
+                </button>
+              </div>
+            )}
           </div>
-          <div className="feature-card">
-            <h3>AI Meal Planning</h3>
-            <p>
-              Get suggestions based on dietary preferences, location, and
-              schedule.
-            </p>
-          </div>
-          <div className="feature-card">
-            <h3>Campus-Specific Insights</h3>
-            <p>
-              Discover indoor routes, see how crowded a place is, and stay warm
-              in winter.
-            </p>
-          </div>
-          <div className="feature-card">
-            <h3>Social & Reviews</h3>
-            <p>
-              Check what friends recommend, rate your own meals, and find hidden
-              gems.
-            </p>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
-      {/* FINAL CTA / FOOTER SECTION */}
-      <footer className="footer-cta" id="cta">
-        <h2>Ready to Transform Your Campus Dining?</h2>
-        <p>Get started with Campus Eats today!</p>
-        <div className="cta-buttons">
-          <button className="btn" onClick={openUploadModal}>
-            Upload Schedule
-          </button>
-          <button className="btn" onClick={openFormModal}>
-            Preferences
-          </button>
-          <button className="btn ai-btn" onClick={goToGeneratePlan}>
-            Generate Plan
-          </button>
-        </div>
-      </footer>
+      {allLocked && (
+        <button className="btn schedule-btn" onClick={goToSchedule}>
+          📅 Generate My Weekday Schedule
+        </button>
+      )}
 
-      {/* Existing Modals */}
-      {isUploadOpen && <UploadModal closeModal={closeUploadModal} />}
-      {isFormOpen && <FormModal closeModal={closeFormModal} />}
+      <div className="map-section">
+        <h2>Find Meals on the Map below </h2>
+        <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={center}
+            zoom={12}
+          >
+            <Marker position={center} />
+          </GoogleMap>
+        </LoadScript>
+      </div>
     </div>
   );
 }
 
-export default LandingPage;
+export default GeneratePlan;

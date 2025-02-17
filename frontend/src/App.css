@@ -1085,7 +1085,107 @@ body {
   display: flex;
   gap: 1rem;
   width: max-content;
-  animation: scroll-left 40s linear infinite; /* reduced duration */
+  animation: scroll-left 100s linear infinite; /* reduced duration */
   animation-delay: 0s; /* ensures no delay */
 }
- 
+ /* Meal Info Container */
+.meal-info {
+  background-color: rgba(73, 70, 60, 0.8); /* Light background */
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  width: 90%;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Meal Info Labels */
+.meal-info p {
+  margin: 3px 0;
+  color: #333;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+/* Meal Info Icons & Labels */
+.meal-info span {
+  color: #274029;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* Randomize & Lock Button Container */
+.meal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Locked Meal Label */
+.locked-label {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #9a1818;
+  margin-top: 10px;
+}
+/* Ensure day-column stretches and buttons stay at the bottom */
+.day-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push buttons to the bottom */
+  align-items: center;
+  width: 400px;
+  min-height: 600px;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  margin-bottom: 50px;
+  padding: 20px;
+}
+
+/* Ensure meal text and info don't affect button placement */
+.meal-text {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Meal Info Card */
+.meal-info {
+  background-color: rgba(228, 207, 174, 0.9); 
+  padding: 10px;
+  border-radius: 8px;
+  width: 90%;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Labels inside meal info */
+.meal-info p {
+  margin: 3px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Ensure the buttons always stick to the bottom */
+.meal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto; /* Push buttons to the bottom */
+  padding-top: 10px;
+}
+.meal-info strong {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 5px; /* Adds spacing after labels */
+}

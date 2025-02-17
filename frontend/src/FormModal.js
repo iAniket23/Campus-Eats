@@ -19,7 +19,7 @@ function FormModal({ closeModal }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch("http://localhost:5001/submit-Form", {
         method: "POST",

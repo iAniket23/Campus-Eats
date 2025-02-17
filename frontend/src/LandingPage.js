@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import UploadModal from "./UploadModal";
+import FormModal from "./FormModal";
 
-function GeneratePlan() {
-  const dayColors = {
-    Mon: "#ddd5d0",
-    Tue: "#cfc0bd",
-    Wed: "#b8b8aa",
-    Thurs: "#7f9183",
-    Fri: "#586f6b",
-  };
+// Import local images
+import opa from "./opa.png";
+import nyf from "./nyf.png";
+import bar from "./bar.png";
+import edo from "./edo.png";
+import bento from "./bento.png";
+import remedy from "./remedy.png";
+import subway from "./subway.png";
+import savoy from "./savoy.png";
 
-  const [allMeals, setAllMeals] = useState([]); // Stores full meal list
-  const [mealPlan, setMealPlan] = useState([]);
+function LandingPage() {
   const navigate = useNavigate();
 
+  
   // Existing modals
   const [isUploadOpen, setUploadOpen] = useState(false);
   const [isFormOpen, setFormOpen] = useState(false);
@@ -188,29 +191,31 @@ function GeneratePlan() {
               gems.
             </p>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
 
-      {allLocked && (
-        <button className="btn schedule-btn" onClick={goToSchedule}>
-          📅 Generate My Weekday Schedule
-        </button>
-      )}
+      {/* FINAL CTA / FOOTER SECTION */}
+      <footer className="footer-cta" id="cta">
+        <h2>Ready to Transform Your Campus Dining?</h2>
+        <p>Get started with Campus Eats today!</p>
+        <div className="cta-buttons">
+          <button className="btn" onClick={openUploadModal}>
+            Upload Schedule
+          </button>
+          <button className="btn" onClick={openFormModal}>
+            Preferences
+          </button>
+          <button className="btn ai-btn" onClick={goToGeneratePlan}>
+            Generate Plan
+          </button>
+        </div>
+      </footer>
 
-      <div className="map-section">
-        <h2>Find Meals on the Map below </h2>
-        <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            center={center}
-            zoom={12}
-          >
-            <Marker position={center} />
-          </GoogleMap>
-        </LoadScript>
-      </div>
+      {/* Existing Modals */}
+      {isUploadOpen && <UploadModal closeModal={closeUploadModal} />}
+      {isFormOpen && <FormModal closeModal={closeFormModal} />}
     </div>
   );
 }
 
-export default GeneratePlan;
+export default LandingPage;

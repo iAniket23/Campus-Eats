@@ -51,6 +51,7 @@ body {
 .hero-title {
   font-size: 3rem;
   margin-bottom: 1rem;
+  font-family: 'Reenie Beanie', cursive;
 }
 
 .hero-subtitle {
@@ -822,3 +823,269 @@ body {
 .meal-block:hover {
   background-color: #f0dfb8;
 }
+
+/* NAV BAR */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #294f46;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.nav-logo {
+  font-family: 'Reenie Beanie', cursive;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a:hover {
+  color: #d4b9b9;
+}
+
+/* HERO SECTION */
+.hero-section {
+  background: linear-gradient(135deg, #b5d6c5 40%, #d4b9b9 100%);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 2rem;
+}
+
+.hero-content {
+  z-index: 2;
+  max-width: 800px;
+  color: #2e2e2e;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.surprise-btn {
+  background-color: #946565;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.surprise-btn:hover {
+  background-color: #7a4f4f;
+}
+
+.ai-btn {
+  background-color: #274029;
+  color: #fff;
+  border-radius: 25px;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.ai-btn:hover {
+  background-color: #1d3023;
+}
+
+/* Hero Scroller (Scrolling Images inside Hero Section) */
+.hero-scroller {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 220px;
+  z-index: 1;
+  opacity: 0.8;
+  padding-top:50px;
+}
+
+.image-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll-left 30s linear infinite;
+}
+
+.image-track img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* STEPS SECTION */
+.steps-section {
+  background-color: #fef6e4;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.steps-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-family: 'Reenie Beanie', cursive;
+  color: #333;
+}
+
+.steps-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.step-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 250px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+  background-color: #b5d6c5;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.step-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #274029;
+}
+
+/* FEATURES SECTION */
+.features-section {
+  background-color: #d4b9b9;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-family: 'Reenie Beanie', cursive;
+  color: #333;
+}
+
+.features-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 300px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.feature-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #274029;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* FOOTER CTA SECTION */
+.footer-cta {
+  background-color: #274029;
+  color: #fff;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.footer-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-family: 'Reenie Beanie', cursive;
+}
+
+.footer-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.hero-title {
+  font-size: 7rem;
+  margin-bottom: 1rem;
+  font-family: 'Reenie Beanie', cursive;
+}
+
+.image-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll-left 40s linear infinite; /* reduced duration */
+  animation-delay: 0s; /* ensures no delay */
+}
+ 

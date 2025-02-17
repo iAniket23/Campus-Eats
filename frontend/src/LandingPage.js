@@ -28,10 +28,10 @@ function LandingPage() {
 
   const goToGeneratePlan = () => {
     navigate("/generate");
-  };
+  };  
 
   const handleSurpriseMe = () => {
-    alert("Surprise Me feature coming soon!");
+    navigate("/pedway");
   };
 
   return (
@@ -61,8 +61,8 @@ function LandingPage() {
             great meals!
           </p>
           <div className="hero-buttons">
-            <button className="btn surprise-btn" onClick={handleSurpriseMe}>
-              Surprise Me!
+            <button className="btn pedway-btn" onClick={handleSurpriseMe}>
+              Use the Pedway!
             </button>
             <button className="btn ai-btn" onClick={goToGeneratePlan}>
               Generate Meal Plan

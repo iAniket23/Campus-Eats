@@ -12,6 +12,7 @@ function GeneratePlan() {
     Fri: "#586f6b",
   };
 
+
   const initialPlan = [
     { day: "Mon", meal: { name: "Meal 1 (Placeholder)", locked: false } },
     { day: "Tue", meal: { name: "Meal 1 (Placeholder)", locked: false } },
@@ -21,7 +22,6 @@ function GeneratePlan() {
   ];
 
   const [mealPlan, setMealPlan] = useState(initialPlan);
-  const [markers, setMarkers] = useState([]);
   const navigate = useNavigate();
 
   /**
@@ -66,16 +66,6 @@ function GeneratePlan() {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       newPlan[dayIndex].meal.locked = true;
-
-      // Get building location for the locked meal
-      const mealName = newPlan[dayIndex].meal.name;
-      const building = mealLocations[mealName];
-      const location = buildingLocations[building];
-
-      if (location) {
-        setMarkers((prevMarkers) => [...prevMarkers, location]);
-      }
-
       return newPlan;
     });
   };
@@ -171,6 +161,7 @@ function GeneratePlan() {
           Generate My Weekday Schedule
         </button>
       )}
+
 
       <div className="map-section">
         <h2>Find Meals on the Map below </h2>

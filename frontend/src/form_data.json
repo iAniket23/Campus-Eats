@@ -1,0 +1,9 @@
+{
+    "cuisine": [
+        "healthy",
+        "indian"
+    ],
+    "maxCalories": "677",
+    "minProtein": "33",
+    "carbs": "44"
+}

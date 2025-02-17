@@ -1140,7 +1140,7 @@ body {
   justify-content: space-between; /* Push buttons to the bottom */
   align-items: center;
   width: 400px;
-  min-height: 600px;
+  min-height: 700px;
   border-radius: 15px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1236,4 +1236,10 @@ body {
 .icon-img {
   width: 750px;
   height: auto;
+}
+
+.foodimage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }

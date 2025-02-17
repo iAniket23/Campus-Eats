@@ -2,34 +2,39 @@ import React, { useState } from "react";
 
 function FormModal({ closeModal }) {
   const [formData, setFormData] = useState({
-    // We store an array for cuisine (max 2)
+    // We store an array for cuisine, up to 2 entries
     cuisine: [],
     maxCalories: "",
     minProtein: "",
-    carbs: "" // Added carbs field
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleFormChange = (e) => {
     const { name, value, type, checked } = e.target;
+
     if (name === "cuisine" && type === "checkbox") {
+      // If user checks a cuisine
       if (checked) {
+        // Ensure we only keep up to 2 cuisines
         setFormData((prev) => {
           if (prev.cuisine.length < 2) {
             return { ...prev, cuisine: [...prev.cuisine, value] };
           } else {
-            // Already picked 2, ignore extra choices
+            // If they already picked 2, you can ignore or replace
+            // For simplicity, we won't let them pick more than 2
             return prev;
           }
         });
       } else {
+        // If user unchecks a cuisine, remove it
         setFormData((prev) => ({
           ...prev,
           cuisine: prev.cuisine.filter((c) => c !== value),
         }));
       }
     } else {
+      // For other fields (calories, protein, etc.)
       setFormData((prev) => ({
         ...prev,
         [name]: value,
@@ -38,69 +43,26 @@ function FormModal({ closeModal }) {
   };
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault(); // Prevent default behavior
-    try {
-      // First, submit form data to backend
-      const response = await fetch("http://localhost:5001/submit-Form", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // Sending formData as-is—modify if your backend needs adjustments
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        // If form submission was successful, fetch meal recommendations
-        await fetchMeal();
-        setFormSubmitted(true);
-      } else {
-        const errorData = await response.json();
-        console.error("Error submitting form:", errorData);
-      }
-    } catch (error) {
-      console.error("Network error during form submit:", error);
-    }
+    e.preventDefault();
+    // In your real code, maybe you do something with this (like POST to server)
+    setFormSubmitted(true);
   };
 
-  const handleMealFetch = async () => {
-    try {
-      const response = await fetch(
-        "https://us-central1-studied-anchor-451016-e0.cloudfunctions.net/cluster",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // Mapping form fields to expected API parameters
-          body: JSON.stringify({
-            calories: formData.maxCalories,
-            protein: formData.minProtein,
-            carbohydrates: formData.carbs,
-          }),
-        }
-      );
+  // We'll just fetch the entire dataset from the API,
+  // and let GeneratePlan handle the filtering.
+  // But if you still want to do it in the form, you can.
 
-      if (!response.ok) {
-        console.error("Error fetching meal data:", response.statusText);
-        return [];
-      }
+  // This function just saves the user preferences to localStorage
+  const handleSavePreferences = () => {
+    // Convert them to number
+    const userPreferences = {
+      cuisine: formData.cuisine, // array of strings
+      maxCalories: Number(formData.maxCalories),
+      minProtein: Number(formData.minProtein),
+    };
 
-      const result = await response.json();
-      console.log("Meal Recommendations:", result);
-      return result.meals || [];
-    } catch (error) {
-      console.error("Network error while fetching meals:", error);
-      return [];
-    }
-  };
-
-  const fetchMeal = async () => {
-    const mealData = await handleMealFetch();
-    if (mealData.length > 0) {
-      console.log("Storing meals in localStorage:", mealData);
-      localStorage.setItem("mealOptions", JSON.stringify(mealData));
-    }
+    localStorage.setItem("userPreferences", JSON.stringify(userPreferences));
+    console.log("Preferences saved:", userPreferences);
   };
 
   return (
@@ -250,26 +212,18 @@ function FormModal({ closeModal }) {
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="carbs">Carbohydrates:</label>
-              <input
-                type="number"
-                id="carbs"
-                name="carbs"
-                value={formData.carbs}
-                onChange={handleFormChange}
-                placeholder="e.g. 50"
-              />
-            </div>
-
-            <button type="submit" className="btn submit-btn">
+            <button
+              type="submit"
+              className="btn submit-btn"
+              onClick={handleSavePreferences}
+            >
               Submit Preferences
             </button>
           </form>
         ) : (
           <div className="form-submitted">
             <h3>Form Submitted</h3>
-            <p>Thank you for submitting your preferences</p>
+            <p>Thank you for submitting your preferences!</p>
           </div>
         )}
       </div>

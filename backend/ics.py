@@ -10,8 +10,11 @@ CORS(app)
 #CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
-FULL_DATA_PATH = os.path.join(BACKEND_DIR, "form_data.json")
-FILTERED_DATA_PATH = os.path.join(BACKEND_DIR, "filtered_data.json")
+FRONTEND_SRC_DIR = os.path.join(BACKEND_DIR, "..", "frontend", "src")
+FULL_DATA_PATH = os.path.join(FRONTEND_SRC_DIR, "form_data.json")
+FILTERED_DATA_PATH = os.path.join(FRONTEND_SRC_DIR, "filtered_data.json")
+# FULL_DATA_PATH = os.path.join(BACKEND_DIR, "form_data.json")
+# FILTERED_DATA_PATH = os.path.join(BACKEND_DIR, "filtered_data.json")
 
 @app.before_request
 def before_request():

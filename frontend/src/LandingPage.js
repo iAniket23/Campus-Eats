@@ -4,15 +4,18 @@ import { useNavigate } from "react-router-dom";
 import UploadModal from "./UploadModal";
 import FormModal from "./FormModal";
 
-// Import local images
-import opa from "./opa.png";
-import nyf from "./nyf.png";
-import bar from "./bar.png";
-import edo from "./edo.png";
-import bento from "./bento.png";
-import remedy from "./remedy.png";
-import subway from "./subway.png";
-import savoy from "./savoy.png";
+import icon1 from "./icon1.gif";
+
+
+// // Import local images
+// import opa from "./opa.png";
+// import nyf from "./nyf.png";
+// import bar from "./bar.png";
+// import edo from "./edo.png";
+// import bento from "./bento.png";
+// import remedy from "./remedy.png";
+// import subway from "./subway.png";
+// import savoy from "./savoy.png";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -46,7 +49,7 @@ function LandingPage() {
             <a href="#steps">How It Works</a>
           </li>
           <li>
-            <a href="#features">Features</a>
+            <a href="#cta">About Us</a>
           </li>
           <li>
             <a href="#cta">Get Started</a>
@@ -71,7 +74,13 @@ function LandingPage() {
             </button>
           </div>
         </div>
-        <div className="hero-scroller">
+
+        <div className="hero-icons">
+  <img src={icon1} alt="Icon 1" className="icon-img" />
+
+</div>
+
+        {/* <div className="hero-scroller">
           <div className="image-track">
             <img src={opa} alt="Meal 1" />
             <img src={nyf} alt="Meal 2" />
@@ -122,7 +131,7 @@ function LandingPage() {
             <img src={subway} alt="Meal 7" />
             <img src={savoy} alt="Meal 8" />
           </div>
-        </div>
+        </div> */}
       </header>
 
       {/* STEPS SECTION */}
@@ -152,7 +161,7 @@ function LandingPage() {
               Our AI tailors your meals to your location, schedule, and
               nutrition goals!
             </p>
-            <button className="btn ai-btn" onClick={goToGeneratePlan}>
+            <button className="btn" onClick={goToGeneratePlan}>
               Generate Plan
             </button>
           </div>
@@ -198,7 +207,7 @@ function LandingPage() {
       <footer className="footer-cta" id="cta">
         <h2>Ready to Transform Your Campus Dining?</h2>
         <p>Get started with Campus Eats today!</p>
-        <div className="cta-buttons">
+        {/* <div className="cta-buttons">
           <button className="btn" onClick={openUploadModal}>
             Upload Schedule
           </button>
@@ -208,7 +217,7 @@ function LandingPage() {
           <button className="btn ai-btn" onClick={goToGeneratePlan}>
             Generate Plan
           </button>
-        </div>
+        </div> */}
       </footer>
 
       {/* Existing Modals */}

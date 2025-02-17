@@ -100,27 +100,28 @@ function Pedway() {
   };
 
   return (
-    <div>
-      <h1>Pedway Navigation</h1>
+    <div className= "pedway">
+      <h1 className="pedway-nav-header">Pedway Navigation</h1>
 
       {/* Restaurant Dropdown */}
-      <label>
+    <div  className="pedway-container">
+      <label className="choose-rest">
         Choose a restaurant:
-        <select value={restaurant} onChange={handleRestaurantChange}>
+        <select className="custom-dropdown" value={restaurant} onChange={handleRestaurantChange}>
           <option value="">Select</option>
           {Object.keys(restaurants).map((resto) => (
             <option key={resto} value={resto}>
               {resto}
             </option>
-          ))}
+          ))}++
         </select>
       </label>
 
       {/* Location Dropdown */}
       {availableLocations.length > 0 && (
-        <label>
+        <label className="choose-location">
           Choose a location:
-          <select
+          <select className="custom-dropdown"
             value={selectedLocation}
             onChange={(e) => setSelectedLocation(e.target.value)}
           >
@@ -135,9 +136,9 @@ function Pedway() {
       )}
 
       {/* Current Building Dropdown */}
-      <label>
+      <label className="current-building">
         Your current building:
-        <select
+        <select className="custom-dropdown"
           value={currentBuilding}
           onChange={(e) => setCurrentBuilding(e.target.value)}
         >
@@ -148,16 +149,19 @@ function Pedway() {
             </option>
           ))}
         </select>
-      </label>
-
-      <button onClick={handleFindRoute}>Find Pedway Route</button>
-
-      {route && <p>{route}</p>}
+      </label >
+      </div>
+      <div className="find-pedway-button-container">
+      <button className="find-pedway-button" onClick={handleFindRoute}>Find Pedway Route</button>
+      </div>
+      <div className="container-route">
+      {route && <p className="pedway-route-text">{route}</p>}
+      </div>
 
       {/* Embedded Pedway Map */}
       <div style={{ marginTop: "20px", textAlign: "center" }}>
-        <h2>UofA Pedway Map</h2>
-        <iframe
+        {/* <h2>UofA Pedway Map</h2> */}
+        <iframe className="pedway-map"
           src="https://www.google.com/maps/d/embed?mid=1BUFc9HbtTR6bmTILd0xHM_sR4OmWjvQ&ehbc=2E312F"
           width="640"
           height="480"

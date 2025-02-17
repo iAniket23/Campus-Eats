@@ -59,8 +59,8 @@ function LandingPage() {
             <button className="btn pedway-btn" onClick={handleSurpriseMe}>
               Use the Pedway!
             </button>
-            <button className="btn ai-btn" onClick={goToGeneratePlan}>
-              Generate Meal Plan
+            <button className="btn" ><a href="#steps">
+              Get Started!</a>
             </button>
           </div>
         </div>

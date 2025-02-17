@@ -40,9 +40,9 @@ function UploadModal({ closeModal }) {
         </button>
         <h2>Upload Your Schedule</h2>
         <div className="upload-content">
-          <img src="/alien.png" alt="Alien" className="alien-img" />
+          {/* <img src="/alien.png" alt="Alien" className="alien-img" /> */}
           <p className="accepted-formats">
-            Accepted formats: PDF, JPEG, PNG, ICS
+            Accepted formats: ICS
           </p>
           <label className="upload-label" htmlFor="file-upload">
             Upload Your Schedule

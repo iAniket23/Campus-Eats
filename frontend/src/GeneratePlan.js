@@ -13,6 +13,7 @@ function GeneratePlan() {
 
   const [allMeals, setAllMeals] = useState([]); // Stores full meal list
   const [mealPlan, setMealPlan] = useState([]);
+  const [mapMarkers, setMapMarkers] = useState([]); // Stores markers for map
   const navigate = useNavigate();
 
   const mapContainerStyle = {
@@ -21,8 +22,24 @@ function GeneratePlan() {
   };
 
   const center = {
-    lat: 37.7749,
-    lng: -122.4194,
+    lat: 53.5266, // Default center near the university
+    lng: -113.5248,
+  };
+
+  // Mapping of building names to their latitudes and longitudes
+  const buildingCoordinates = {
+    CCIS: { lat: 53.5232, lng: -113.5263 },
+    CAB: { lat: 53.5266, lng: -113.5248 },
+    "Cameron Library": { lat: 53.5267, lng: -113.5236 },
+    ETLC: { lat: 53.5232, lng: -113.5263 },
+    ECHA: { lat: 53.5209, lng: -113.5264 },
+    "Lister Centre": { lat: 53.5232, lng: -113.5263 },
+    "Tory hall": { lat: 53.5282, lng: -113.5215 },
+    NREF: { lat: 53.5268, lng: -113.5291 },
+    HUB: { lat: 53.5262, lng: -113.5207 },
+    SUB: { lat: 53.5253, lng: -113.5274 },
+    "Dewey's": { lat: 53.5261, lng: -113.5233 },
+    VVC: { lat: 53.5241, lng: -113.5274 },
   };
 
   // Fetch meals from API
@@ -49,39 +66,37 @@ function GeneratePlan() {
     }
   };
 
-// Function to format meal names properly
-const formatMealName = (name) => {
-  if (!name) return "Unknown Meal";
-  return name
-    .split(" ") // Split into words
-    .map(word => {
-      if (word.length <= 2 || word.toUpperCase() === word) {
-        // Keep short words (e.g., "BBQ", "SUB") and numbers unchanged
-        return word;
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" "); // Join words back together
-};
+  // Function to format meal names properly
+  const formatMealName = (name) => {
+    if (!name) return "Unknown Meal";
+    return name
+      .split(" ")
+      .map((word) => {
+        if (word.length <= 2 || word.toUpperCase() === word) {
+          return word;
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(" ");
+  };
 
-// Function to select and format meals
-const selectRandomMeals = () => {
-  if (allMeals.length < 5) return;
+  // Function to select and format meals
+  const selectRandomMeals = () => {
+    if (allMeals.length < 5) return;
 
-  const shuffledMeals = [...allMeals].sort(() => 0.5 - Math.random());
-  const selectedMeals = shuffledMeals.slice(0, 5);
+    const shuffledMeals = [...allMeals].sort(() => 0.5 - Math.random());
+    const selectedMeals = shuffledMeals.slice(0, 5);
 
-  const newMealPlan = [
-    { day: "Mon", meal: { name: formatMealName(selectedMeals[0]?.meal), ...selectedMeals[0], locked: false } },
-    { day: "Tue", meal: { name: formatMealName(selectedMeals[1]?.meal), ...selectedMeals[1], locked: false } },
-    { day: "Wed", meal: { name: formatMealName(selectedMeals[2]?.meal), ...selectedMeals[2], locked: false } },
-    { day: "Thurs", meal: { name: formatMealName(selectedMeals[3]?.meal), ...selectedMeals[3], locked: false } },
-    { day: "Fri", meal: { name: formatMealName(selectedMeals[4]?.meal), ...selectedMeals[4], locked: false } },
-  ];
+    const newMealPlan = [
+      { day: "Mon", meal: { name: formatMealName(selectedMeals[0]?.meal), ...selectedMeals[0], locked: false } },
+      { day: "Tue", meal: { name: formatMealName(selectedMeals[1]?.meal), ...selectedMeals[1], locked: false } },
+      { day: "Wed", meal: { name: formatMealName(selectedMeals[2]?.meal), ...selectedMeals[2], locked: false } },
+      { day: "Thurs", meal: { name: formatMealName(selectedMeals[3]?.meal), ...selectedMeals[3], locked: false } },
+      { day: "Fri", meal: { name: formatMealName(selectedMeals[4]?.meal), ...selectedMeals[4], locked: false } },
+    ];
 
-  setMealPlan(newMealPlan);
-};
- 
+    setMealPlan(newMealPlan);
+  };
 
   // Fetch meals on first render
   useEffect(() => {
@@ -110,26 +125,31 @@ const selectRandomMeals = () => {
     });
   };
 
-  // Randomize all unlocked meals using spacebar
   const randomizeAllUnlocked = () => {
-    if (allMeals.length === 0) return;
-
     setMealPlan((prevPlan) => {
-      return prevPlan.map((dayData) => {
+      const updatedPlan = prevPlan.map((dayData) => {
         if (!dayData.meal.locked) {
           const randomMeal = allMeals[Math.floor(Math.random() * allMeals.length)];
           return { ...dayData, meal: randomMeal };
         }
         return dayData;
       });
+      return updatedPlan;
     });
   };
 
-  // Lock a meal
   const lockMeal = (dayIndex) => {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       newPlan[dayIndex].meal.locked = true;
+
+      const locationNames = newPlan[dayIndex].meal.location?.split(",") || [];
+      const newMarkers = locationNames
+        .map((name) => buildingCoordinates[name.trim()])
+        .filter((coordinates) => coordinates);
+
+      setMapMarkers((prevMarkers) => [...prevMarkers, ...newMarkers]);
+
       return newPlan;
     });
   };
@@ -170,19 +190,29 @@ const selectRandomMeals = () => {
           <div className="day-column" key={dayData.day} style={{ backgroundColor: dayColors[dayData.day] }}>
             <div className="day-title">{dayData.day}</div>
 
-            {/* Meal Name */}
             <div className="meal-text">
               <strong>{dayData.meal.meal || "Unknown Meal"}</strong>
             </div>
 
-            {/* Meal Info (Better UI) */}
             <div className="meal-info">
-              <p><strong>Calories :  </strong> { dayData.meal.calories || "N/A"}</p>
-              <p><strong>Carbs : </strong> {dayData.meal.carbohydrates || "N/A"}g</p>
-              <p><strong>Protein : </strong> {dayData.meal.protein || "N/A"}g</p>
-              <p><strong>Category : </strong> {dayData.meal.category || "N/A"}</p>
-              <p><strong>Restaurant : </strong> {dayData.meal.restaurant || "N/A"}</p>
-              <p><strong>Location : </strong> {dayData.meal.location || "N/A"}</p>
+              <p>
+                <strong>Calories:</strong> {dayData.meal.calories || "N/A"}
+              </p>
+              <p>
+                <strong>Carbs:</strong> {dayData.meal.carbohydrates || "N/A"}g
+              </p>
+              <p>
+                <strong>Protein:</strong> {dayData.meal.protein || "N/A"}g
+              </p>
+              <p>
+                <strong>Category:</strong> {dayData.meal.category || "N/A"}
+              </p>
+              <p>
+                <strong>Restaurant:</strong> {dayData.meal.restaurant || "N/A"}
+              </p>
+              <p>
+                <strong>Location:</strong> {dayData.meal.location || "N/A"}
+              </p>
             </div>
 
             {dayData.meal.locked ? (
@@ -202,16 +232,20 @@ const selectRandomMeals = () => {
       </div>
 
       {allLocked && (
-        <button className="btn schedule-btn" onClick={goToSchedule}>
-          Generate My Weekday Schedule
-        </button>
+        <div className="generate-schedule">
+          <button className="btn schedule-btn" onClick={goToSchedule}>
+            Generate Schedule
+          </button>
+        </div>
       )}
 
       <div className="map-section">
-        <h2>Find Meals on the Map below </h2>
+        <h2>Find Meals on the Map below</h2>
         <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
-          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
-            <Marker position={center} />
+          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={16}>
+            {mapMarkers.map((marker, index) => (
+              <Marker key={index} position={marker} />
+            ))}
           </GoogleMap>
         </LoadScript>
       </div>

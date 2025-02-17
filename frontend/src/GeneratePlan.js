@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 function GeneratePlan() {
-  // Define colors for each weekday
+
   const dayColors = {
     Mon: "#ddd5d0",
     Tue: "#cfc0bd",
@@ -12,7 +12,7 @@ function GeneratePlan() {
     Fri: "#586f6b",
   };
 
-  // Only Monday–Friday, one meal per day
+
   const initialPlan = [
     { day: "Mon", meal: { name: "Meal 1 (Placeholder)", locked: false } },
     { day: "Tue", meal: { name: "Meal 1 (Placeholder)", locked: false } },
@@ -24,18 +24,44 @@ function GeneratePlan() {
   const [mealPlan, setMealPlan] = useState(initialPlan);
   const navigate = useNavigate();
 
-  // Randomize a single meal if it's not locked
+  /**
+   * Randomize only the given day (if not locked).
+   */
   const randomizeMeal = (dayIndex) => {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
       if (!newPlan[dayIndex].meal.locked) {
-        newPlan[dayIndex].meal.name = "Random Meal " + Math.floor(Math.random() * 100);
+        newPlan[dayIndex].meal.name =
+          "Random Meal " + Math.floor(Math.random() * 100);
       }
       return newPlan;
     });
   };
 
-  // Lock a meal
+  /**
+   * Randomize all UNLOCKED days when user presses spacebar.
+   */
+  const randomizeAllUnlocked = () => {
+    setMealPlan((prevPlan) => {
+      return prevPlan.map((dayData) => {
+        if (!dayData.meal.locked) {
+          return {
+            ...dayData,
+            meal: {
+              ...dayData.meal,
+              name: "Random Meal " + Math.floor(Math.random() * 100),
+            },
+          };
+        }
+
+        return dayData;
+      });
+    });
+  };
+
+  /**
+   * Lock a single day.
+   */
   const lockMeal = (dayIndex) => {
     setMealPlan((prevPlan) => {
       const newPlan = [...prevPlan];
@@ -44,67 +70,84 @@ function GeneratePlan() {
     });
   };
 
-  // Check if every meal is locked
+  /**
+   * Check if every meal is locked.
+   */
   const allLocked = mealPlan.every((dayData) => dayData.meal.locked);
 
-  // Navigate to schedule page once everything is locked
+  /**
+   * Save locked meals to localStorage, then navigate to /schedule.
+   */
   const goToSchedule = () => {
+    const lockedMeals = {};
+    mealPlan.forEach((dayData) => {
+      if (dayData.meal.locked) {
+        lockedMeals[dayData.day] = { name: dayData.meal.name };
+      }
+    });
+    localStorage.setItem("lockedMeals", JSON.stringify(lockedMeals));
     navigate("/schedule");
   };
 
-  // Map configuration
+  /**
+   * Spacebar Handler:
+   * Pressing space randomizes ALL UNLOCKED DAYS at once.
+   */
+  useEffect(() => {
+    function handleSpace(e) {
+      if (e.code === "Space") {
+        e.preventDefault();
+     
+        randomizeAllUnlocked();
+      }
+    }
+    window.addEventListener("keydown", handleSpace);
+    return () => {
+      window.removeEventListener("keydown", handleSpace);
+    };
+  }, []);
+
+
   const mapContainerStyle = {
     width: "100%",
     height: "400px",
   };
-
   const center = {
-    lat: 37.7749, 
-    lng: -122.4194, 
+    lat: 37.7749,
+    lng: -122.4194,
   };
 
   return (
-
-    
     <div className="generate-page">
-      {/* <h1 className="generate-title">Customize Your Weekly Meal Plan</h1>
-      <p className="generate-subtitle">
-        Lock in meals you like and randomize the ones you don’t until you’re happy!
-      </p> */}
-
       <div className="days-container">
         {mealPlan.map((dayData, dayIndex) => (
           <div
             className="day-column"
             key={dayData.day}
-            style={{ backgroundColor: dayColors[dayData.day] }} // Apply unique color per day
+            style={{ backgroundColor: dayColors[dayData.day] }}
           >
-            {/* Day name at the top */}
+
             <div className="day-title">{dayData.day}</div>
-            
-            {/* Optional magnifying glass icon */}
-            <div className="magnify-icon">🔍</div>
 
-            {/* Lock / Unlock display */}
-            {dayData.meal.locked ? (
-              <div className="lock-icon">🔒</div>
-            ) : (
-              <div className="lock-icon">🔓</div>
-            )}
 
-            {/* Meal info below the lock icon */}
             <div className="meal-text">{dayData.meal.name}</div>
 
-            {/* Buttons only show if meal not locked */}
-            {!dayData.meal.locked && (
+            {dayData.meal.locked ? (
+              <div className="meal-actions locked-label">Locked</div>
+            ) : (
               <div className="meal-actions">
+             
                 <button
                   className="btn randomize-btn"
                   onClick={() => randomizeMeal(dayIndex)}
                 >
                   Randomize
                 </button>
-                <button className="btn lock-btn" onClick={() => lockMeal(dayIndex)}>
+           
+                <button
+                  className="btn lock-btn"
+                  onClick={() => lockMeal(dayIndex)}
+                >
                   Lock
                 </button>
               </div>
@@ -113,19 +156,17 @@ function GeneratePlan() {
         ))}
       </div>
 
-      {/* If all meals are locked, show a button to generate weekday schedule */}
       {allLocked && (
         <button className="btn schedule-btn" onClick={goToSchedule}>
           Generate My Weekday Schedule
         </button>
       )}
 
-      {/* Google Map Section */}
+
       <div className="map-section">
-        <h2>Find Meals on the Map</h2>
+        <h2>Find Meals on the Map below </h2>
         <LoadScript googleMapsApiKey="AIzaSyAmFJfwEavqUEViMP__VukcfGEDJqWPXE4">
           <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={12}>
-            {/* Example Marker */}
             <Marker position={center} />
           </GoogleMap>
         </LoadScript>

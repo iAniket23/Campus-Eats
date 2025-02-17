@@ -6,10 +6,10 @@ import re
 import json
 
 app = Flask(__name__)
-#app.run(debug=True)
 
 
-# Helper functions
+
+
 def extract_text_from_image(file):
     """Extract text from an uploaded image."""
     img = Image.open(file)
@@ -17,7 +17,7 @@ def extract_text_from_image(file):
 
 def extract_text_from_pdf(file):
     """Extract text from a PDF by converting it to images and running OCR."""
-    pages = convert_from_path(file, 300)  # Convert PDF pages to images (300 DPI)
+    pages = convert_from_path(file, 300) 
     text = ""
     for page in pages:
         text += pytesseract.image_to_string(page)
@@ -37,17 +37,17 @@ def generate_time_slots(start, end, interval=1):
 
 def process_schedule_text(extracted_text):
     """Process raw text into a structured schedule."""
-    # Initialize schedule structure
+
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-    time_slots = generate_time_slots(8, 19)  # 8:00 AM to 7:00 PM
+    time_slots = generate_time_slots(8, 19)  
     schedule = {day: {time: "empty" for time in time_slots} for day in days}
 
-    # Regular expressions to parse the schedule
+
     lines = extracted_text.split("\n")
     for line in lines:
         for day in days:
             if day in line:
-                # Find time, class, and location details in the line
+                
                 match = re.search(r"(\d{1,2}:\d{2} [APM]+).+?(\w+ \d+).+?([A-Z]+\s\d+-\d+)", line)
                 if match:
                     time, class_name, location = match.groups()
@@ -64,16 +64,16 @@ def upload_file():
         return jsonify({"error": "No file uploaded"}), 400
 
     try:
-        # Detect file type
+
         if file.filename.endswith('.pdf'):
             extracted_text = extract_text_from_pdf(file)
         else:
             extracted_text = extract_text_from_image(file)
 
-        # Process text into structured schedule with empty slots
+      
         schedule = process_schedule_text(extracted_text)
 
-        # Save JSON to file
+      
         with open("schedule.json", "w") as json_file:
             json.dump(schedule, json_file, indent=4)
 

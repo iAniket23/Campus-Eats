@@ -367,7 +367,7 @@ body {
 }
 
 .btn {
-  background-color: #8fb170; 
+  background-color: #EFC743; 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -494,8 +494,8 @@ body {
 }
 
 .btn {
-  background-color: #8fb170;
-  color: #fff;
+  background-color: #EFC743;
+  color: #274029;
   border: none;
   border-radius: 25px;
   padding: 8px 16px;
@@ -829,7 +829,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #294f46;
+  background-color: #274029;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
@@ -861,7 +861,7 @@ body {
 
 /* HERO SECTION */
 .hero-section {
-  background: linear-gradient(135deg, #b5d6c5 40%, #d4b9b9 100%);
+  background: #FEF6E4;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -962,8 +962,8 @@ body {
 
 /* STEPS SECTION */
 .steps-section {
-  background-color: #fef6e4;
-  padding: 3rem 1rem;
+  background-color: #EFC743;
+  padding: 5rem 1rem;
   text-align: center;
 }
 
@@ -1010,7 +1010,7 @@ body {
 
 /* FEATURES SECTION */
 .features-section {
-  background-color: #d4b9b9;
+  background-color: #F29F58;
   padding: 3rem 1rem;
   text-align: center;
 }
@@ -1079,6 +1079,7 @@ body {
   font-size: 7rem;
   margin-bottom: 1rem;
   font-family: 'Reenie Beanie', cursive;
+
 }
 
 .image-track {
@@ -1328,4 +1329,51 @@ body {
   padding: 10px 20px;         /* Padding around the text (adjust as needed) */
   border-radius: 20px;        /* Rounded corners */
   display: inline-block;      /* Makes the background fit to the text */
+}
+.step-card {
+  
+  
+  /* Ensures all step cards have the same height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px; /* Adjust this as needed */
+}
+
+.step-card .btn {
+  margin-top: auto; /* Pushes the button to the bottom */
+}
+.step-number {
+  margin-left:70px;
+}
+.hero-section {
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the left */
+  align-items: flex-start; /* Aligns items to the top */
+  padding: 120px; /* Adds spacing so it's not cornered */
+  background-color: #FEF6E4;
+}
+
+.hero-title {
+  margin-left:-180px;
+}
+
+.hero-buttons{
+  margin-left:-300px;
+}
+
+/* .icon-img {
+  width: 300px;
+  margin-bottom: 15px;
+} */
+.hero-icons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  /* any other styling */
+}
+
+.icon-img {
+  width: 750px;
+  height: auto;
 }

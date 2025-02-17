@@ -1190,6 +1190,146 @@ body {
   font-weight: bold;
   margin-right: 5px; /* Adds spacing after labels */
 }
+
+/*Pedway css*/
+
+.pedway{
+  background-color: #EFC743;
+  height: 100vh; 
+}
+
+.pedway-nav-header {
+  text-align: center;  
+  color: #274029;      
+  font-family: 'Reenie Beanie', cursive;  
+  font-size: 4rem;     
+  position: relative;  
+  top: 20px;        
+}
+
+.pedway-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center; 
+  width: 100%; 
+ 
+}
+
+.choose-rest{
+  font-size: 18px;
+  font-weight: bold;
+  color: #274029;  
+  text-align: center; 
+  margin-top: 30px;
+  flex:1;
+  padding-left: 20px ;
+ 
+}
+
+.choose-location{
+  font-size: 18px;
+  font-weight: bold;
+  color: #274029;  
+  text-align: center; 
+  margin-top: 30px;
+  flex:1;
+  
+}
+
+.current-building{
+  font-size: 18px;
+  font-weight: bold;
+  color: #274029;  
+  text-align: center; 
+  margin-top: 30px;
+  flex:1;
+  padding-right: 20px;
+  
+}
+
+.pedway-map {
+  margin-top: 35px;   
+  margin-left: auto;  
+  margin-right: auto; 
+  width: 70%;         
+  max-width: 1200px;  
+  height: 55vh;       
+  display: block;   
+  border-radius: 15px;  
+}
+
+.find-pedway-button-container {
+  display: flex;
+  justify-content: center;  /* Centers the button horizontally */
+  margin-top: 20px;  /* Adds space above the button */
+}
+
+.find-pedway-button {
+  padding: 10px 20px;  /* Add some padding to the button */
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #274029;  /* You can change the button color */
+  color: white;
+  border: none;
+  border-radius: 5px;  /* Optional: Adds rounded corners */
+  cursor: pointer;  /* Makes the button look clickable */
+  transition: background-color 0.3s ease;  /* Optional: Smooth transition on hover */
+}
+
+.find-pedway-button:hover {
+  background-color: #1c2a1d;  /* Optional: Darker color on hover */
+}
+
+.custom-dropdown {
+  width: 100%;
+  max-width: 300px; /* Customize width */
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid #274029; /* Border color */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #FEF6E4; /* Background color */
+  color: #274029; /* Text color */
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease; /* Smooth transition for hover/focus effects */
+}
+
+.custom-dropdown:focus {
+  outline: none;
+  border-color: #6f9b3b; /* Border color when focused */
+  background-color: #FEF6E4; /* Change background when focused */
+}
+
+.custom-dropdown option {
+  font-weight: bold; /* Makes the text bold */
+  background-color: #FEF6E4; /* Set background color of options */
+  color: #274029; /* Text color of options */
+  padding: 5px; /* Space around the text inside options */
+}
+
+.custom-dropdown option:hover {
+  background-color: #f1c40f; /* Change background color on hover */
+}
+
+
+.container-route{
+  display: flex;             /* Enable flexbox */
+  justify-content: center;   /* Horizontally center the content */
+  align-items: center;       /* Vertically center the content (optional) */
+  width: 100%; 
+}
+
+.pedway-route-text{
+  font-weight: bold;          /* Makes the text bold */
+  text-align: center;         /* Centers the text */
+  font-size: 18px;            /* Adjust font size as needed */
+  margin-top: 20px;           /* Optional: Adds some space above the text */
+  color: #274029;             /* Text color */
+  background-color: #6f9b3b;;  /* Background color */
+  padding: 10px 20px;         /* Padding around the text (adjust as needed) */
+  border-radius: 20px;        /* Rounded corners */
+  display: inline-block;      /* Makes the background fit to the text */
+}
 .step-card {
   
   

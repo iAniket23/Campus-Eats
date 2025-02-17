@@ -207,6 +207,13 @@ function LandingPage() {
       <footer className="footer-cta" id="cta">
         <h2>Ready to Transform Your Campus Dining?</h2>
         <p>Get started with Campus Eats today!</p>
+        
+        {/* Credits */}
+        <p className="footer-credits">
+          Hacked with ❤️ by Aisha, Aniket, Mehak, Ayaan, and Sneha <br/>
+          <br /> HackED © 2025
+        </p>
+      </footer>
         {/* <div className="cta-buttons">
           <button className="btn" onClick={openUploadModal}>
             Upload Schedule
@@ -218,7 +225,7 @@ function LandingPage() {
             Generate Plan
           </button>
         </div> */}
-      </footer>
+      
 
       {/* Existing Modals */}
       {isUploadOpen && <UploadModal closeModal={closeUploadModal} />}

@@ -1,9 +1,9 @@
 {
     "cuisine": [
         "indian",
-        "asian"
+        "healthy"
     ],
     "maxCalories": "2000",
-    "minProtein": "10",
-    "carbs": "40"
+    "minProtein": "30",
+    "carbs": "50"
 }
